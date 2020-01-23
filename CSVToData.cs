@@ -20,7 +20,6 @@ namespace CSI
                     var point = line.Split(';');
                     double x = Convert.ToDouble(point[0]);
                     double y = Convert.ToDouble(point[1]);
-
                     pointList.Add(new Point(x,y));
                 }
             }

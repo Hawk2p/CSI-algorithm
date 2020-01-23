@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CSI
 {
@@ -30,9 +31,12 @@ namespace CSI
 
         static void Main(string[] args)
         {   
+            Stopwatch sw = new Stopwatch();
             CubicAlgo csi = new CubicAlgo(googleMapsData);
-            csi.getJacobianMatrix();
-            csi.Print(250);
+            sw.Start();
+            csi.getJacobianVector();
+            sw.Stop();
+            Console.Write(sw.Elapsed);
         }
     }
 }

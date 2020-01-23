@@ -14,28 +14,33 @@ namespace CSI {
             this.pointList = pointList;
             this.matrix = new Matrix(pointList.Count);
             this.vector = new Vector(pointList.Count);
+            Insert();
         }
 
         public void Insert() {
             matrix.Set(0,0,2);
-            for(int i = 1; i < matrix.Size -1; i++) {
+            for(int i = 1; i < matrix.getSize() -1; i++) {
                 matrix.Set(i,i-1, Variables.Mi(i,pointList));
                 matrix.Set(i,i,2);
                 matrix.Set(i,i+1, Variables.Lambda(i,pointList));
                 vector.Set(i,Variables.Delta(i,pointList));
             }
-            matrix.Set(matrix.Size-1, matrix.Size-1, 2);
+            matrix.Set(matrix.getSize()-1, matrix.getSize()-1, 2);
         }
 
         public void getGaussVector() {
+            // for(int i = 0; i < this.matrix.getSize(); i++)
+            //     for(int j = 0; j < this.matrix.getSize(); j++)             
+            //         Console.WriteLine(this.matrix.Get(i,j));
             this.matrixVector = new PartialGauss(matrix,vector).Calculate();
+            
         }
 
         public void getGSVector() {
             this.matrixVector = new GS(matrix,vector).Calculate();
         }
 
-        public void getJacobianMatrix() {
+        public void getJacobianVector() {
             this.matrixVector = new Jacobian(matrix,vector).Calculate();
         }
         public void Print(int howMany)
@@ -54,14 +59,12 @@ namespace CSI {
             int i = GetIndexX(x);
 
             double diff = x - pointList[i].X;
-
             double value = A(i,pointList) +
                             B(i,pointList) * diff +
                             C(i) * diff * diff +
                             D(i) * diff * diff * diff;
-
+            Console.WriteLine(" " + A(i,pointList) + " " + B(i,pointList) + " " + C(i) + " " + D(i));
             return value;
-
         }
 
         private int GetIndexX(double x)
